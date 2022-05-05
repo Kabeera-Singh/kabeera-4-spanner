@@ -85,7 +85,7 @@ sidebar = html.Div(
     style = SIDEBAR_STYLE,
 )
 app = JupyterDash(external_stylesheets = [dbc.themes.BOOTSTRAP],suppress_callback_exceptions = True)
-
+server = app.server 
 content = html.Div(id = "page-content", style = CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id = "url"),content,header, sidebar])
