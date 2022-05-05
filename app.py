@@ -20,9 +20,23 @@ vars_dict['num_nodes'] = 70
 vars_dict['density'] = .5
 
 
+
 data = pd.read_csv('data.csv')
 
+time_graphs = []
+for group in data['density'].unique():
+    df_group = data[data['density'] == group]
+    trace = go.Scatter(x=df_group['nodes'], 
+                        y=df_group['time'],
+                        mode='markers',
+                        name=group)
+    time_graphs.append(trace)
+layout = go.Layout(title='Grouping')
+fig = go.Figure(data=time_graphs, layout=layout)
 
+# Layout of the plot
+layout = go.Layout(title='Grouping')
+fig = go.Figure(data=time_graphs, layout=layout)
 
 
 # Dash
@@ -196,10 +210,7 @@ Timing_Page = html.Div([
     ],style = HEADER_STYLE),
     html.Div([
       
-        dcc.Graph(id="Timecomplexity", figure =
-         go.Figure(data=go.Scatter(x=data["nodes"], y=data["time"],name=str(data["density"]), mode='markers')))
-      
-
+        dcc.Graph(id="Timecomplexity", figure = fig)
     ])
 ])
 
