@@ -32,11 +32,41 @@ for group in data['density'].unique():
                         name=group)
     time_graphs.append(trace)
 layout = go.Layout(title='Grouping')
-fig = go.Figure(data=time_graphs, layout=layout)
+nodes_graph = go.Figure(data=time_graphs, layout=layout)
+nodes_graph.update_layout(
+    title="Nodes vs Time",
+    xaxis_title="Number of Nodes",
+    yaxis_title="Time (seconds)",
+    legend_title="Density",
+    font=dict(
+        family="Courier New, monospace",
+        size=18,
+        color="RebeccaPurple"
+    )
+)
 
-# Layout of the plot
+data=data.assign(edges_reduced=lambda x: x['G\'s edges'] - x['H\'s edges'])
+time_graphs = []
+for group in data['density'].unique():
+    df_group = data[data['density'] == group]
+    trace = go.Scatter(x=df_group['nodes'], 
+                        y=df_group['edges_reduced'],
+                        mode='markers',
+                        name=group)
+    time_graphs.append(trace)
 layout = go.Layout(title='Grouping')
-fig = go.Figure(data=time_graphs, layout=layout)
+edges_graph = go.Figure(data=time_graphs, layout=layout)
+edges_graph.update_layout(
+    title="Nodes vs Edges Reduced",
+    xaxis_title="Number of Nodes",
+    yaxis_title="Number of Edges Reduced",
+    legend_title="Density",
+    font=dict(
+        family="Courier New, monospace",
+        size=18,
+        color="RebeccaPurple"
+    )
+)
 
 
 # Dash
@@ -210,7 +240,11 @@ Timing_Page = html.Div([
     ],style = HEADER_STYLE),
     html.Div([
       
-        dcc.Graph(id="Timecomplexity", figure = fig)
+        dcc.Graph(id="Timecomplexity", figure = nodes_graph)
+    ]),
+        html.Div([
+      
+        dcc.Graph(id="Timecomplexity", figure = edges_graph)
     ])
 ])
 
