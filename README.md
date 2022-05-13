@@ -5,6 +5,9 @@
 `runtime.txt` simply tells Heroku (the Gunicorn HTTP server) which Python version to use <br>
 `Procfile` tells Heroku what type of process is going to run (Gunicorn web process) and the Python app entrypoint (app.py) <br>
 `/assets` this directory is ONLY to serve the favicon icon. It cannot be used to serve any other static files <br>
+`functions.py` this file stores the helper functions for the application, including all of the code implementing the +4 spanner<br>
+`data.csv` stores the runtime data so that we do not have to rerun the algorithm on graphs of different sizes<br>
+`styles.json` creates css styling for the application
 `.gitignore` file telling git which files and directories to ignore when pushing to the remote repositories <br>
 
 ## Instructions
